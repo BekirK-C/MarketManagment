@@ -14,5 +14,6 @@ namespace Entities.Concrete
         public string? LastName { get; set; }
         public string? NationalityId { get; set; }
         public DateTime DateOfBirth { get; set; }
+
     }
 }
