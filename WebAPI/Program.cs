@@ -22,25 +22,30 @@ namespace WebAPI
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddDependencyResolvers(new ICoreModule[]
+
+            //builder.Services.AddDependencyResolvers(new ICoreModule[]  //Cache iþlemi için gerçekleþtirilen dependency resolver.
             //{
             //    new CoreModule()
             //});
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<ICustomerService, CustomerManager>();
-            builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>();
 
-            //builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-            //builder.Host.ConfigureContainer<ContainerBuilder>(options =>
-            //{
-            //    options.RegisterModule(new AutofacBusinessModule());
-            //});
+            builder.Services.AddSwaggerGen();
+
+            #region .Net Core IoC yapýsý
+            //builder.Services.AddSingleton<ICustomerService, CustomerManager>(); // Bu iþlem IoC için yapýlýr.
+            //builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>(); 
+            #endregion
+
+            #region Autofac Implementasyonu
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(options =>
+            {
+                options.RegisterModule(new AutofacBusinessModule());
+            }); 
+            #endregion
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

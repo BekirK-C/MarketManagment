@@ -21,13 +21,12 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
-            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
-                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
-                {
-                    Selector = new AspectInterceptorSelector()
-                }).SingleInstance();
+            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();     // Burada Aspect işlemi için AutfoacModule çalışıyor.
+            //builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+            //    .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+            //    {
+            //        Selector = new AspectInterceptorSelector()
+            //    }).SingleInstance();
         }
     }
 }
