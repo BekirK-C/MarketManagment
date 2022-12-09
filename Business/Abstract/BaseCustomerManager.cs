@@ -1,5 +1,4 @@
-﻿using Business.Abstract;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -8,25 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Concrete
+namespace Business.Abstract
 {
-    public class CustomerManager : ICustomerService
+    public abstract class BaseCustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
 
-        public CustomerManager(ICustomerDal customerDal)
+        public BaseCustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
 
         public IResult Add(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerDal.Add(customer);
+            return new SuccessResult("Başarıyla Eklendi");
         }
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Listeleme Başarılı");
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Başarıyla Listelendi");
         }
 
         public IDataResult<Customer> GetByCustomertId(int customerId)

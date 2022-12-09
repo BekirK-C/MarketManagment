@@ -18,7 +18,7 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
+            builder.RegisterType<CustomerHermasoManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
             //var assembly = System.Reflection.Assembly.GetExecutingAssembly();     // Burada Aspect işlemi için AutfoacModule çalışıyor.
