@@ -18,7 +18,7 @@ namespace Business.Abstract
             _customerDal = customerDal;
         }
 
-        public IResult Add(Customer customer)
+        public virtual IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
             return new SuccessResult("Başarıyla Eklendi");
