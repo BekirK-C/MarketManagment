@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
+using Business.Adapters;
 using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
@@ -20,6 +21,8 @@ namespace Business.DependencyResolvers.Autofac
         {
             builder.RegisterType<CustomerSiempreManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
+
+            builder.RegisterType<MernisServiceAdapter>().As<ICustomerCheckService>().SingleInstance();
 
             //var assembly = System.Reflection.Assembly.GetExecutingAssembly();     // Burada Aspect işlemi için AutfoacModule çalışıyor.
             //builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
