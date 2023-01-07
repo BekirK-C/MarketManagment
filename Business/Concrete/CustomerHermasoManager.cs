@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    internal class CustomerHermasoManager : BaseCustomerManager
+    internal class CustomerHermasoManager : BaseCustomerManager, IHermasoService
     {
         public CustomerHermasoManager(ICustomerDal customerDal) : base(customerDal)
         {

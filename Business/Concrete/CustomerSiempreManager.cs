@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class CustomerSiempreManager : BaseCustomerManager
+    public class CustomerSiempreManager : BaseCustomerManager, ISiempreService
     {
         ICustomerCheckService _customerCheckService;
         public CustomerSiempreManager(ICustomerDal customerDal, ICustomerCheckService customerCheckService) : base(customerDal)
@@ -32,3 +32,4 @@ namespace Business.Concrete
         }
     }
 }
+

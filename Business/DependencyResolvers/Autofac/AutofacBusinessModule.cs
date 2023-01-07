@@ -19,7 +19,8 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerSiempreManager>().As<ICustomerService>().SingleInstance();
+            builder.RegisterType<CustomerHermasoManager>().As<IHermasoService>().SingleInstance();
+            builder.RegisterType<CustomerSiempreManager>().As<ISiempreService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
             builder.RegisterType<MernisServiceAdapter>().As<ICustomerCheckService>().SingleInstance();
