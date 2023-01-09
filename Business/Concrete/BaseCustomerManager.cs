@@ -1,4 +1,5 @@
-﻿using Business.BusinessAspects.Autofac;
+﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Abstract
+namespace Business.Concrete
 {
     public abstract class BaseCustomerManager : ICustomerService
     {
@@ -26,6 +27,7 @@ namespace Business.Abstract
             return new SuccessResult("Başarıyla Eklendi");
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Başarıyla Listelendi");

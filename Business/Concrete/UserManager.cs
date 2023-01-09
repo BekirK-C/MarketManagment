@@ -33,26 +33,26 @@ namespace Business.Concrete
 
         public IDataResult<List<User>> GetAll()
         {
-            _userDal.GetAll();
-            return new SuccessDataResult<List<User>>("Kullanıcılar Listelendi");
+            
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), "Kullanıcılar Listelendi");
         }
 
         public IDataResult<User> GetByMail(string email)
         {
-            _userDal.Get(u => u.Email == email);
-            return new SuccessDataResult<User>("Kullanıcı Listelendi");
+            
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email), "Kullanıcı Listelendi");
         }
 
         public IDataResult<List<OperationClaim>> GetClaims(User user)
         {
-            _userDal.GetClaims(user);
-            return new SuccessDataResult<List<OperationClaim>>();
+            
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
 
         public IDataResult<User> GetUser(int userId)
         {
-            _userDal.Get(u => u.Id == userId);
-            return new SuccessDataResult<User>("Kullanıcı Listelendi");
+            
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId), "Kullanıcı Listelendi");
         }
 
         public IResult Update(User user)
