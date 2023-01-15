@@ -27,7 +27,7 @@ namespace Business.Concrete
             return new SuccessResult("Başarıyla Eklendi");
         }
 
-        [SecuredOperation("admin")]
+        [SecuredOperation("admin,user")]
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Başarıyla Listelendi");

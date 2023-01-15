@@ -10,6 +10,10 @@ using Business.Abstract;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Core.Utilities.Security.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Core.Utilities.Security.Encryption;
 
 namespace WebAPI
 {
@@ -31,6 +35,7 @@ namespace WebAPI
 
             builder.Services.AddSwaggerGen();
 
+
             #region .Net Core IoC yapýsý
             //builder.Services.AddSingleton<ICustomerService, CustomerManager>(); // Bu iþlem IoC için yapýlýr.
             //builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>(); 
@@ -41,7 +46,28 @@ namespace WebAPI
             builder.Host.ConfigureContainer<ContainerBuilder>(options =>
             {
                 options.RegisterModule(new AutofacBusinessModule());
-            }); 
+            });
+            #endregion
+
+
+            #region JWT Implementasyonu
+            var tokenOptions = builder.Configuration.GetSection("tokenOptions").Get<TokenOptions>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = tokenOptions.Issuer,
+                    ValidAudience = tokenOptions.Audience,
+                    IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                };
+            });
+
+            builder.Services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() }); 
             #endregion
 
             var app = builder.Build();
@@ -54,8 +80,9 @@ namespace WebAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
